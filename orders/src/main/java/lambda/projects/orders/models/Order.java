@@ -22,7 +22,7 @@ public class Order {
     private Set<Payment> payments = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "custcode", nullable = false)
+    @JoinColumn(name = "custcode")
     private Customer customer;
 
     public Order() {
@@ -32,6 +32,9 @@ public class Order {
         this.advanceamount = advanceamount;
         this.ordamount = ordamount;
         this.orderdescription = orderdescription;
+    }
+
+    public Order(double v, double v1, Customer c16, String sod) {
     }
 
     public long getOrdnum() {
