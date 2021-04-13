@@ -1,5 +1,7 @@
 package lambda.projects.orders.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,8 @@ public class Agent {
     @OneToMany(mappedBy = "agent",
     cascade = CascadeType.ALL,
     orphanRemoval = true)
-    private List<Customer> orders = new ArrayList<>();
+    @JsonIgnoreProperties(value = "agent", allowSetters = true)
+    private List<Customer> customers = new ArrayList<>();
 
     public Agent() {
     }
@@ -79,5 +82,13 @@ public class Agent {
 
     public void setWorkingarea(String workingarea) {
         this.workingarea = workingarea;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
     }
 }
