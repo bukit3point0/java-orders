@@ -1,6 +1,7 @@
 package lambda.projects.orders.services;
 
 import lambda.projects.orders.models.Customer;
+import lambda.projects.orders.views.OrderCounts;
 
 import java.util.List;
 
@@ -20,4 +21,5 @@ public interface CustomerServices {
     List<Customer> findByCustnameLike(String subname);
 
     // customers/orders/count
+    List <OrderCounts> getCountOrders();
 }

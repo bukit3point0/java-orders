@@ -2,6 +2,7 @@ package lambda.projects.orders.controllers;
 
 import lambda.projects.orders.models.Customer;
 import lambda.projects.orders.services.CustomerServices;
+import lambda.projects.orders.views.OrderCounts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,5 +44,10 @@ public class CustomerController {
     }
 
     // http://localhost:2019/customers/orders/count
+    @GetMapping(value = "orders/count", produces = "application/json")
+    public ResponseEntity<?> findByOrderCount() {
+        List<OrderCounts> returnList = customerServices.getCountOrders();
+        return new ResponseEntity<>(returnList, HttpStatus.OK);
+    }
 
 }
