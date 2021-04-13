@@ -2,6 +2,7 @@ package lambda.projects.orders.controllers;
 
 import lambda.projects.orders.models.Customer;
 import lambda.projects.orders.services.CustomerServices;
+import lambda.projects.orders.views.CustomerOrders;
 import lambda.projects.orders.views.OrderCounts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,15 +20,20 @@ public class CustomerController {
     @Autowired
     private CustomerServices customerServices;
 
-    // sanity check
-    // http://localhost:2019/customers
-    @GetMapping(value = "/", produces = "application/json")
+    // http://localhost:2019/customers/orders
+    @GetMapping(value = "/orders", produces = "application/json")
     public ResponseEntity<?> getAllCustomers() {
         List<Customer> customerList = customerServices.findAllCustomers();
         return new ResponseEntity<>(customerList, HttpStatus.OK);
     }
 
-    // http://localhost:2019/customers/orders
+    // bad misunderstanding, wrong code
+//    // http://localhost:2019/customers/orders
+//    @GetMapping(value = "/orders", produces = "application/json")
+//    public ResponseEntity<?> getCustomerOrders() {
+//        List<CustomerOrders> returnList = customerServices.getOrdNum();
+//        return new ResponseEntity<>(returnList, HttpStatus.OK);
+//    }
 
     // http://localhost:2019/customers/:id
     @GetMapping(value = "/{custid}", produces = "application/json")

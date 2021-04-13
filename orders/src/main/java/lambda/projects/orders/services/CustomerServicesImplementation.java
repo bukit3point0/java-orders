@@ -2,6 +2,7 @@ package lambda.projects.orders.services;
 
 import lambda.projects.orders.models.Customer;
 import lambda.projects.orders.repositories.CustomerRepository;
+import lambda.projects.orders.views.CustomerOrders;
 import lambda.projects.orders.views.OrderCounts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,12 @@ public class CustomerServicesImplementation implements CustomerServices{
     @Override
     public List<OrderCounts> getCountOrders() {
         List<OrderCounts> returnList = custrepos.findCountOrders();
+        return returnList;
+    }
+
+    @Override
+    public List<CustomerOrders> getOrdNum() {
+        List<CustomerOrders> returnList = custrepos.findCustomerOrders();
         return returnList;
     }
 }
