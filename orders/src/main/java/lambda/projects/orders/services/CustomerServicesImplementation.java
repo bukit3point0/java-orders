@@ -30,10 +30,10 @@ public class CustomerServicesImplementation implements CustomerServices{
     }
 
     @Override
-    public Customer findCustomerById(long id) {
+    public Customer findCustomerById(long custcode) {
         return custrepos
-                .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Customer " + id + " not found"));
+                .findById(custcode)
+                .orElseThrow(() -> new EntityNotFoundException("Customer " + custcode + " not found"));
     }
 
     @Override

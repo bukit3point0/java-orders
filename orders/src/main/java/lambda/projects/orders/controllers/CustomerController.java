@@ -29,6 +29,11 @@ public class CustomerController {
     // http://localhost:2019/customers/orders
 
     // http://localhost:2019/customers/:id
+    @GetMapping(value = "/{custid}", produces = "application/json")
+    public ResponseEntity<?> findCustomerById(@PathVariable long custid) {
+        Customer returnCustomer = customerServices.findCustomerById(custid);
+        return new ResponseEntity<>(returnCustomer, HttpStatus.OK);
+    }
 
     // http://localhost:2019/customers/namelike/:likename
     @GetMapping(value = "namelike/{subname}", produces = "application/json")
