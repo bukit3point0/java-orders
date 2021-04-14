@@ -11,4 +11,8 @@ public interface OrderServices {
 
     // orders/order/:id
     Order findOrderById(long id);
+
+    void delete(long id);
+
+    Order update(Order order, long id);
 }

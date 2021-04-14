@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "orders")
+@JsonIgnoreProperties({"hasadvanceamount", "hasordamount"})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,6 +17,11 @@ public class Order {
     private double advanceamount;
     private double ordamount;
     private String orderdescription;
+
+    @Transient
+    public boolean hasadvanceamount = false;
+    @Transient
+    public boolean hasordamount = false;
 
     @ManyToMany()
     @JoinTable(name = "orderspayments",
@@ -53,6 +59,7 @@ public class Order {
     }
 
     public void setAdvanceamount(double advanceamount) {
+        hasadvanceamount = true;
         this.advanceamount = advanceamount;
     }
 
@@ -61,6 +68,7 @@ public class Order {
     }
 
     public void setOrdamount(double ordamount) {
+        hasordamount = true;
         this.ordamount = ordamount;
     }
 

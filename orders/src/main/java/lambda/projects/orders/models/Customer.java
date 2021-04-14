@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customers")
+@JsonIgnoreProperties(value = {"hasopeningamt", "hasoutstandingamt", "haspaymentamt", "hasreceiveamt"})
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +24,15 @@ public class Customer {
     private String phone;
     private double receiveamt;
     private String workingarea;
+
+    @Transient
+    public boolean hasopeningamt = false;
+    @Transient
+    public boolean hasoutstandingamt = false;
+    @Transient
+    public boolean haspaymentamt = false;
+    @Transient
+    public boolean hasreceiveamt = false;
 
     @OneToMany(mappedBy = "customer",
     cascade = CascadeType.ALL,
@@ -109,6 +119,7 @@ public class Customer {
     }
 
     public void setOpeningamt(double openingamt) {
+        hasopeningamt = true;
         this.openingamt = openingamt;
     }
 
@@ -117,6 +128,7 @@ public class Customer {
     }
 
     public void setOutstandingamt(double outstandingamt) {
+        hasoutstandingamt = true;
         this.outstandingamt = outstandingamt;
     }
 
@@ -125,6 +137,7 @@ public class Customer {
     }
 
     public void setPaymentamt(double paymentamt) {
+        haspaymentamt = true;
         this.paymentamt = paymentamt;
     }
 
@@ -137,6 +150,7 @@ public class Customer {
     }
 
     public double getReceiveamt() {
+        hasreceiveamt = true;
         return receiveamt;
     }
 

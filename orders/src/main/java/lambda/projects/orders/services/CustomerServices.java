@@ -11,11 +11,8 @@ public interface CustomerServices {
 
     void delete(long id);
 
-    // customers
-    List<Customer> findAllCustomers();
-
     // customers/orders
-
+    List<Customer> findAllCustomers();
 
     // customers/:id
     Customer findCustomerById(long id);
@@ -27,4 +24,6 @@ public interface CustomerServices {
     List <OrderCounts> getCountOrders();
 
     List<CustomerOrders> getOrdNum();
+
+    Customer update(Customer customer, long id);
 }
