@@ -5,13 +5,14 @@ import lambda.projects.orders.services.CustomerServices;
 import lambda.projects.orders.views.CustomerOrders;
 import lambda.projects.orders.views.OrderCounts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -54,6 +55,34 @@ public class CustomerController {
     public ResponseEntity<?> findByOrderCount() {
         List<OrderCounts> returnList = customerServices.getCountOrders();
         return new ResponseEntity<>(returnList, HttpStatus.OK);
+    }
+
+    // POST http://localhost:2019/customers/customer
+    @PostMapping(value = "/customer", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<?> addNewCustomer(@Valid
+                                            @RequestBody Customer newCustomer) {
+        newCustomer.setCustcode(0);
+        newCustomer = customerServices.save(newCustomer);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newCustomerURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{custid}")
+                .buildAndExpand(newCustomer.getCustcode())
+                .toUri();
+        responseHeaders.setLocation(newCustomerURI);
+
+        return new ResponseEntity<>(newCustomer, responseHeaders, HttpStatus.CREATED);
+    }
+
+    // PUT http://localhost:2019/customers/customer/:id
+
+    // PATCH http://localhost:2019/customers/customer/:id
+
+    // DELETE http://localhost:2019/customers/customer/:id
+    @DeleteMapping(value = "/customer/{custid}")
+    public ResponseEntity<?> deleteCustomerById(@PathVariable long custid) {
+        customerServices.delete(custid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

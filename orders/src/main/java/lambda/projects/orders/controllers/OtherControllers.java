@@ -36,4 +36,12 @@ public class OtherControllers {
     // stretch
     // http://localhost:2019/orders/advanceamount
 
+    // POST http://locahlhost:2019/order/order
+
+    // PUT http://localhost:2019/orders/order/:id
+
+    // DELETE http://localhost:2019/orders/order/:id
+
+    // stretch
+    // DELETE http://localhost:2019/agents/unassigned/:id
 }

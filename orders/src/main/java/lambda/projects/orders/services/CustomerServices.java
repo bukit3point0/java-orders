@@ -9,6 +9,8 @@ import java.util.List;
 public interface CustomerServices {
     Customer save(Customer customer);
 
+    void delete(long id);
+
     // customers
     List<Customer> findAllCustomers();
 

@@ -1,6 +1,8 @@
 package lambda.projects.orders.services;
 
 import lambda.projects.orders.models.Customer;
+import lambda.projects.orders.models.Order;
+import lambda.projects.orders.models.Payment;
 import lambda.projects.orders.repositories.CustomerRepository;
 import lambda.projects.orders.views.CustomerOrders;
 import lambda.projects.orders.views.OrderCounts;
@@ -20,8 +22,54 @@ public class CustomerServicesImplementation implements CustomerServices{
 
     @Transactional
     @Override
+    // Customer
+    // orders
     public Customer save(Customer customer) {
+        Customer newCustomer = new Customer();
+
+        // PUT request section
+        if(customer.getCustcode() != 0) {
+            findCustomerById(customer.getCustcode());
+
+            newCustomer.setCustcode(customer.getCustcode());
+        }
+
+        newCustomer.setCustname(customer.getCustname());
+        newCustomer.setCustcity(customer.getCustcity());
+        newCustomer.setWorkingarea(customer.getWorkingarea());
+        newCustomer.setCustcountry(customer.getCustcountry());
+        newCustomer.setGrade(customer.getGrade());
+        newCustomer.setOpeningamt(customer.getOpeningamt());
+        newCustomer.setReceiveamt(customer.getReceiveamt());
+        newCustomer.setPaymentamt(customer.getPaymentamt());
+        newCustomer.setOutstandingamt(customer.getOutstandingamt());
+        newCustomer.setPhone(customer.getPhone());
+        newCustomer.setAgent(customer.getAgent());
+
+        newCustomer.getOrders().clear();
+        for (Order o : customer.getOrders()) {
+            Order newOrder = new Order();
+
+            newOrder.setAdvanceamount(o.getAdvanceamount());
+            newOrder.setOrdamount(o.getOrdamount());
+            newOrder.setOrderdescription(o.getOrderdescription());
+            newOrder.setCustomer(newCustomer);
+
+            newCustomer.getOrders().add(newOrder);
+        }
+
+        // currently wrong: agent not setting, payments not setting
+
         return custrepos.save(customer);
+    }
+
+    @Override
+    public void delete(long id) {
+        if (custrepos.findById(id).isPresent()) {
+            custrepos.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("Customer " + id + " not found");
+        }
     }
 
     @Override
